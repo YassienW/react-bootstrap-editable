@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types";
 import TextField from "./components/TextField";
+import Select from "./components/Select";
 import {Button, Form} from "reactstrap";
 
 export default class Editable extends React.Component{
@@ -36,9 +37,12 @@ export default class Editable extends React.Component{
                                   onSubmit={newValue => this.onSubmit(newValue)}
                                   onCancel={() => this.onCancel()}
                                   validationText={this.state.validationText}/>
-            case "textarea":
-                return null
             case "select":
+                return <Select value={this.state.newValue} controls={controls} options={this.props.options}
+                                  setNewValue={(newValue) => this.setState({newValue: newValue})}
+                                  onSubmit={newValue => this.onSubmit(newValue)}
+                                  onCancel={() => this.onCancel()}/>
+            case "textarea":
                 return null
             case "date":
                 return null
@@ -110,7 +114,7 @@ export default class Editable extends React.Component{
 }
 Editable.defaultProps = {
     type: null,
-    mode: null,
+    mode: "popup",
     value: null,
     disabled: false,
     isValueClickable: false,
@@ -119,6 +123,8 @@ Editable.defaultProps = {
     ajax: null,
     onSubmit: null,
     onValidated: null,
+    //select props
+    options: null
 }
 Editable.propTypes = {
     type: PropTypes.oneOf(["textfield", "textarea", "select", "date"]).isRequired,
@@ -131,4 +137,6 @@ Editable.propTypes = {
     ajax: PropTypes.func,
     onSubmit: PropTypes.func,
     onValidated: PropTypes.func,
+    //select props
+    options: PropTypes.array,
 }
