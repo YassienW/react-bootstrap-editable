@@ -1,14 +1,13 @@
 {
   "name": "react-bootstrap-editable",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "editable.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "storybook": "start-storybook -c .storybook",
+    "storybook": "start-storybook -p 6969 -c .storybook",
     "babel": "babel src -d scripts",
-    "browserify": "browserify ./scripts/Editable.js -o ./dist/editable.js",
-    "build": "npm run babel && npm run browserify",
-    "dist": "build-storybook -c .storybook -o docs"
+    "browserify": "npm run babel && browserify ./scripts/Editable.js -s Editable -g [envify --NODE_ENV production] -g uglifyify | uglifyjs --compress --mangle > ./dist/editable.js",
+    "dist": "npm run babel && npm run browserify && build-storybook -c .storybook -o docs"
   },
   "babel": {
     "presets": [
@@ -19,19 +18,25 @@
   "author": "Yassien",
   "license": "ISC",
   "dependencies": {
+    "prop-types": "^15.6.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "reactstrap": "^7.1.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
+    "@storybook/addon-actions": "^4.1.11",
+    "@storybook/addon-console": "^1.1.0",
+    "@storybook/addons": "^4.1.11",
     "@storybook/react": "^4.1.11",
-    "babel-cli": "^6.26.0",
     "babel-loader": "^8.0.5",
-    "babel-preset-stage-3": "^6.24.1",
-    "browserify": "^16.2.3"
+    "browserify": "^16.2.3",
+    "envify": "^4.1.0",
+    "uglify-js": "^3.4.9",
+    "uglifyify": "^5.0.1"
   },
-  "description": "Clean editable bootstrap components for react (Similar to https://vitalets.github.io/x-editable/)"
+  "description": "Clean editable bootstrap components for react. Ajax support!"
 }
