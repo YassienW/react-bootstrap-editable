@@ -27,7 +27,7 @@ export default class Editable extends React.Component{
             </React.Fragment>
         )
         if(this.state.isLoading){
-            controls = (<p>Loading...</p>)
+            controls = (<p className="my-0">Loading...</p>)
         }
         switch(this.props.type){
             case "textfield":
@@ -51,10 +51,11 @@ export default class Editable extends React.Component{
         //reset validation text AND new value, all back to initial
         this.setState({validationText: null, newValue:this.state.value, isEditing: false})
     }
+    //validation happens here
     onSubmit(){
         const validationText = this.props.validate? this.props.validate(this.state.newValue) : null
 
-        //we always trigger this
+        //we always trigger this, as long as the prop is specified
         this.props.onSubmit? this.props.onSubmit(this.state.newValue) : null
 
         if(validationText){
@@ -66,12 +67,29 @@ export default class Editable extends React.Component{
     onValidated(validValue){
         this.props.onValidated? this.props.onValidated(validValue):
             console.warn("Editable: Specified a validate function without onValidated, possible error")
-        if(this.ajax){
-
+        if(this.props.ajax && validValue !== this.state.value){
+            this.ajax(validValue)
         }else{
-
+            this.setState({value: validValue, isEditing: false, validationText: null})
         }
-        this.setState({value: validValue, isEditing: false, validationText: null})
+    }
+    ajax(validValue){
+        this.setState({isLoading: true})
+        let xhr = new XMLHttpRequest()
+        //this will call the user's ajax function, allowing him to set up the object however he wants
+        this.props.ajax(xhr, validValue)
+        //consume the user's on ready state change function to call it later before the editable's
+        let onReadyStateChange = xhr.onreadystatechange? xhr.onreadystatechange : null
+        xhr.onreadystatechange = () => {
+            onReadyStateChange? onReadyStateChange() : null
+            if(xhr.readyState === 4){
+                if(xhr.status === 200){
+                    this.setState({isLoading: false, isEditing: false, value: validValue, validationText: null})
+                }else{
+                    this.setState({isLoading: false, validationText: `Ajax Response ${xhr.status} Error`})
+                }
+            }
+        }
     }
     render(){
         const value = this.state.value? this.state.value: "No value"
@@ -83,7 +101,7 @@ export default class Editable extends React.Component{
                 <Form inline>
                     {!this.props.isValueClickable && <h6 className="my-0 mr-1">{value}</h6>}
                     <a href="javascript:;" onClick={() => {this.setState({isEditing: true})}}>
-                        {this.props.isValueClickable? value : this.props.edit}
+                        {this.props.isValueClickable? value : this.props.editText}
                     </a>
                 </Form>
             )
@@ -96,8 +114,9 @@ Editable.defaultProps = {
     value: null,
     disabled: false,
     isValueClickable: false,
-    edit: "Edit",
+    editText: "Edit",
     validate: null,
+    ajax: null,
     onSubmit: null,
     onValidated: null,
 }
@@ -107,8 +126,9 @@ Editable.propTypes = {
     value: PropTypes.string,
     disabled: PropTypes.bool,
     isValueClickable: PropTypes.bool,
-    edit: PropTypes.string,
+    editText: PropTypes.string,
     validate: PropTypes.func,
+    ajax: PropTypes.func,
     onSubmit: PropTypes.func,
     onValidated: PropTypes.func,
 }
