@@ -2,6 +2,8 @@ import React from "react"
 import PropTypes from "prop-types";
 import TextField from "./components/TextField";
 import Select from "./components/Select";
+//using this in order not to get mixed up with Date objects
+import DateComponent from "./components/Date";
 import {Button, Form} from "reactstrap";
 
 export default class Editable extends React.Component{
@@ -19,7 +21,7 @@ export default class Editable extends React.Component{
     getEditingComponent(){
         let controls = (
             <React.Fragment>
-                <Button className="mx-1" color="success" size="sm" onClick={() => this.onSubmit()}>
+                <Button className="mx-1" color="success" size="sm" onClick={() => this.onSubmit(this.state.newValue)}>
                     <i className="fa fa-check fa-fw"/>
                 </Button>
                 <Button color="danger" size="sm" onClick={() => this.onCancel()}>
@@ -34,17 +36,16 @@ export default class Editable extends React.Component{
             case "textfield":
                 return <TextField value={this.state.newValue} controls={controls}
                                   setNewValue={(newValue) => this.setState({newValue: newValue})}
-                                  onSubmit={newValue => this.onSubmit(newValue)}
-                                  onCancel={() => this.onCancel()}
                                   validationText={this.state.validationText}/>
             case "select":
                 return <Select value={this.state.newValue} controls={controls} options={this.props.options}
                                   setNewValue={(newValue) => this.setState({newValue: newValue})}
-                                  onSubmit={newValue => this.onSubmit(newValue)}
                                   onCancel={() => this.onCancel()}/>
-            case "textarea":
-                return null
             case "date":
+                return <DateComponent value={this.state.newValue} controls={controls}
+                               setNewValue={(newValue) => this.setState({newValue: newValue})}
+                               onCancel={() => this.onCancel()}/>
+            case "textarea":
                 return null
             default:
                 console.error(`"Editable: "${this.props.type}" is not a valid value for the type prop`)
@@ -56,16 +57,16 @@ export default class Editable extends React.Component{
         this.setState({validationText: null, newValue:this.state.value, isEditing: false})
     }
     //validation happens here
-    onSubmit(){
-        const validationText = this.props.validate? this.props.validate(this.state.newValue) : null
+    onSubmit(newValue){
+        const validationText = this.props.validate? this.props.validate(newValue) : null
 
         //we always trigger this, as long as the prop is specified
-        this.props.onSubmit? this.props.onSubmit(this.state.newValue) : null
+        this.props.onSubmit? this.props.onSubmit(newValue) : null
 
         if(validationText){
             this.setState({validationText: validationText})
         }else{
-            this.props.validate? this.onValidated(this.state.newValue) : this.setState({value: this.state.newValue, isEditing: false})
+            this.props.validate? this.onValidated(newValue) : this.setState({value: newValue, isEditing: false})
         }
     }
     onValidated(validValue){
@@ -96,11 +97,13 @@ export default class Editable extends React.Component{
         }
     }
     render(){
-        const value = this.state.value? this.state.value: "No value"
-
         if(this.state.isEditing){
             return(this.getEditingComponent())
         }else{
+            let value = this.state.value? this.state.value: "No value"
+            //format date objects for display, might add a custom format function here later
+            value = this.state.value instanceof Date ? this.state.value.toUTCString().slice(4, 16) : value
+
             return(
                 <Form inline>
                     {!this.props.isValueClickable && <h6 className="my-0 mr-1">{value}</h6>}
@@ -129,7 +132,7 @@ Editable.defaultProps = {
 Editable.propTypes = {
     type: PropTypes.oneOf(["textfield", "textarea", "select", "date"]).isRequired,
     mode: PropTypes.oneOf(["inline", "popup"]).isRequired,
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.instanceOf(window.Date)]),
     disabled: PropTypes.bool,
     isValueClickable: PropTypes.bool,
     editText: PropTypes.string,
