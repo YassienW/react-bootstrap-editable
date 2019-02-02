@@ -9,7 +9,7 @@ for the latest additions**
 ## Installation
 
 ```bash
-npm i kik-node-api
+npm i react-bootstrap-editable
 ```
 
 ## Changelog:
