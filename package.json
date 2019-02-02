@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-editable",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "dist/editable.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -39,5 +39,16 @@
     "uglify-js": "^3.4.9",
     "uglifyify": "^5.0.1"
   },
-  "description": "Clean editable bootstrap components for react. Ajax support!"
+  "description": "Clean editable bootstrap components for react. Ajax support!",
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YassienW/react-bootstrap-editable.git"
+  },
+  "bugs": {
+    "url": "https://github.com/YassienW/react-bootstrap-editable/issues"
+  },
+  "homepage": "https://github.com/YassienW/react-bootstrap-editable#readme"
 }
