@@ -1,7 +1,7 @@
 {
   "name": "react-bootstrap-editable",
-  "version": "1.0.0",
-  "main": "editable.js",
+  "version": "0.2.0",
+  "main": "dist/editable.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6969 -c .storybook",
@@ -30,6 +30,7 @@
     "@babel/preset-react": "^7.0.0",
     "@storybook/addon-actions": "^4.1.11",
     "@storybook/addon-console": "^1.1.0",
+    "@storybook/addon-info": "^4.1.11",
     "@storybook/addons": "^4.1.11",
     "@storybook/react": "^4.1.11",
     "babel-loader": "^8.0.5",
