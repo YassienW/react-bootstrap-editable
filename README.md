@@ -6,8 +6,14 @@ Clean editable bootstrap components for react. Ajax support!
 [documentation](https://yassienw.github.io/react-bootstrap-editable/) 
 for the latest additions**
 
-##Changelog:
-###0.2.0:
+## Installation
+
+```bash
+npm i kik-node-api
+```
+
+## Changelog:
+### 0.2.0:
 - Added select editable
 - Added date editable
 - Updated documentation
