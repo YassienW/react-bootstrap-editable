@@ -6,8 +6,8 @@ export default class TextField extends React.Component {
         super(props)
     }
     render(){
-        const options = this.props.options.map((value) => {
-            return <option>{value}</option>
+        const options = this.props.options.map((value, index) => {
+            return <option key={index + value}>{value}</option>
         })
         return (
             <React.Fragment>
