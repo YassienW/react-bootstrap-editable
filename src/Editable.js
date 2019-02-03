@@ -18,6 +18,11 @@ export default class Editable extends React.Component{
             isLoading: false,
         }
     }
+    componentDidMount() {
+        if(this.props.ajax && !this.props.validate){
+            console.error(`Editable: You provided an ajax prop without a validate prop; ajax function will not be called`)
+        }
+    }
     getEditingComponent(){
         let controls = (
             <React.Fragment>
@@ -48,7 +53,7 @@ export default class Editable extends React.Component{
             case "textarea":
                 return null
             default:
-                console.error(`"Editable: "${this.props.type}" is not a valid value for the type prop`)
+                console.error(`Editable: "${this.props.type}" is not a valid value for the type prop`)
                 return null
         }
     }
@@ -70,8 +75,12 @@ export default class Editable extends React.Component{
         }
     }
     onValidated(validValue){
-        this.props.onValidated? this.props.onValidated(validValue):
-            console.warn("Editable: Specified a validate function without onValidated, possible error")
+        if(this.props.onValidated){
+            this.props.onValidated(validValue)
+        }else if(!this.props.ajax){
+            console.error("Editable: Specified a validate function without onValidated or ajax")
+        }
+
         if(this.props.ajax && validValue !== this.state.value){
             this.ajax(validValue)
         }else{
