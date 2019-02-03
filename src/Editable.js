@@ -26,7 +26,7 @@ export default class Editable extends React.Component{
     getEditingComponent(){
         let controls = (
             <React.Fragment>
-                <Button className="mx-1" color="success" size="sm" onClick={() => this.onSubmit(this.state.newValue)}>
+                <Button className="mr-1" color="success" size="sm" onClick={() => this.onSubmit(this.state.newValue)}>
                     <i className="fa fa-check fa-fw"/>
                 </Button>
                 <Button color="danger" size="sm" onClick={() => this.onCancel()}>
