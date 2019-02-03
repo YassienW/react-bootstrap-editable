@@ -90,8 +90,8 @@ export default class Editable extends React.Component{
     ajax(validValue){
         this.setState({isLoading: true})
         let xhr = new XMLHttpRequest()
-        //this will call the user's ajax function, allowing him to set up the object however he wants
-        this.props.ajax(xhr, validValue)
+        //this will call the user's ajax function, allowing him to set up the xhr object however he wants
+        this.props.ajax(xhr, validValue, this.props.id)
         //consume the user's on ready state change function to call it later before the editable's
         let onReadyStateChange = xhr.onreadystatechange? xhr.onreadystatechange : null
         xhr.onreadystatechange = () => {
@@ -113,9 +113,10 @@ export default class Editable extends React.Component{
             //format date objects for display, might add a custom format function here later
             value = this.state.value instanceof Date ? this.state.value.toUTCString().slice(4, 16) : value
 
+            const displayText = this.props.label? `${this.props.label}: ${value}` : value
             return(
                 <Form inline>
-                    {!this.props.isValueClickable && <h6 className="my-0 mr-1">{value}</h6>}
+                    {!this.props.isValueClickable && <h6 className="my-0 mr-1">{displayText}</h6>}
                     <a href="javascript:;" onClick={() => {this.setState({isEditing: true})}}>
                         {this.props.isValueClickable? value : this.props.editText}
                     </a>
@@ -128,9 +129,12 @@ Editable.defaultProps = {
     type: null,
     mode: "popup",
     value: null,
+    id: null,
+    label: null,
     disabled: false,
     isValueClickable: false,
     editText: "Edit",
+    //functions
     validate: null,
     ajax: null,
     onSubmit: null,
@@ -141,10 +145,13 @@ Editable.defaultProps = {
 Editable.propTypes = {
     type: PropTypes.oneOf(["textfield", "textarea", "select", "date"]).isRequired,
     mode: PropTypes.oneOf(["inline", "popup"]).isRequired,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.instanceOf(window.Date)]),
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.instanceOf(Date)]),
+    id: PropTypes.string,
+    label: PropTypes.string,
     disabled: PropTypes.bool,
     isValueClickable: PropTypes.bool,
     editText: PropTypes.string,
+    //functions
     validate: PropTypes.func,
     ajax: PropTypes.func,
     onSubmit: PropTypes.func,
