@@ -126,8 +126,8 @@ export default class Editable extends React.Component{
     }
 }
 Editable.defaultProps = {
-    type: null,
-    mode: "popup",
+    type: "textfield",
+    mode: "inline",
     value: null,
     id: null,
     label: null,
