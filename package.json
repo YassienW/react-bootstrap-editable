@@ -1,13 +1,14 @@
 {
   "name": "react-bootstrap-editable",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "main": "dist/editable.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6969 -c .storybook",
     "babel": "babel src -d scripts",
-    "browserify": "npm run babel && browserify ./scripts/Editable.js -s Editable -g [envify --NODE_ENV production] -g uglifyify | uglifyjs --compress --mangle > ./dist/editable.js",
-    "dist": "npm run babel && npm run browserify && build-storybook -c .storybook -o docs"
+    "browserify": "browserify ./scripts/Editable.js -s Editable -g uglifyify | uglifyjs --compress --mangle > ./dist/editable.js",
+    "dist": "npm run babel && npm run browserify",
+    "distdocs": "build-storybook -c .storybook -o docs"
   },
   "babel": {
     "presets": [
