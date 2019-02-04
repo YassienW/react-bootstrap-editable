@@ -37,19 +37,21 @@ export default class Editable extends React.Component{
         if(this.state.isLoading){
             controls = (<p className="my-0">Loading...</p>)
         }
+        let commonProps = {
+            value: this.state.newValue,
+            controls: controls,
+            setNewValue: (newValue) => this.setState({newValue: newValue}),
+            onCancel: () => this.onCancel(),
+            inputCol: this.props.inputCol,
+            controlsCol: this.props.controlsCol,
+        }
         switch(this.props.type){
             case "textfield":
-                return <TextField value={this.state.newValue} controls={controls}
-                                  setNewValue={(newValue) => this.setState({newValue: newValue})}
-                                  validationText={this.state.validationText}/>
+                return <TextField {...commonProps} validationText={this.state.validationText}/>
             case "select":
-                return <Select value={this.state.newValue} controls={controls} options={this.props.options}
-                                  setNewValue={(newValue) => this.setState({newValue: newValue})}
-                                  onCancel={() => this.onCancel()}/>
+                return <Select {...commonProps} options={this.props.options}/>
             case "date":
-                return <DateComponent value={this.state.newValue} controls={controls}
-                               setNewValue={(newValue) => this.setState({newValue: newValue})}
-                               onCancel={() => this.onCancel()}/>
+                return <DateComponent {...commonProps} validationText={this.state.validationText}/>
             case "textarea":
                 return null
             default:
