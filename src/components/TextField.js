@@ -10,7 +10,7 @@ export default class TextField extends React.Component {
             <React.Fragment>
                 <Form>
                     <Row form className="my-0">
-                        <Col md={6}>
+                        <Col md={this.props.inputCol}>
                             <FormGroup className="my-0">
                                 <Input invalid={!!this.props.validationText}
                                        value={this.props.value? this.props.value : ""}
@@ -18,7 +18,7 @@ export default class TextField extends React.Component {
                                        type="text" bsSize="sm"/>
                             </FormGroup>
                         </Col>
-                        <Col md={6}>
+                        <Col md={this.props.controlsCol}>
                             {this.props.controls}
                         </Col>
                     </Row>

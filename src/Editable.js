@@ -145,6 +145,8 @@ Editable.defaultProps = {
     disabled: false,
     isValueClickable: false,
     editText: "Edit",
+    inputCol: 6,
+    controlsCol: 6,
     //functions
     validate: null,
     ajax: null,
@@ -162,6 +164,8 @@ Editable.propTypes = {
     disabled: PropTypes.bool,
     isValueClickable: PropTypes.bool,
     editText: PropTypes.string,
+    inputCol: PropTypes.number,
+    controlsCol: PropTypes.number,
     //functions
     validate: PropTypes.func,
     ajax: PropTypes.func,

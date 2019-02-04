@@ -11,14 +11,14 @@ export default class Date extends React.Component {
             <React.Fragment>
                 <Form>
                     <Row form className="my-0">
-                        <Col md={6}>
+                        <Col md={this.props.inputCol}>
                             <FormGroup className="my-0">
                                 <Input value={this.props.value? this.props.value.toISOString().slice(0, 10): ""}
                                        type="date" bsSize="sm"
                                        onChange={e => this.props.setNewValue(e.target.valueAsDate)} />
                             </FormGroup>
                         </Col>
-                        <Col md={6}>
+                        <Col md={this.props.controlsCol}>
                             {this.props.controls}
                         </Col>
                     </Row>

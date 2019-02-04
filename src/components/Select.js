@@ -13,13 +13,13 @@ export default class TextField extends React.Component {
             <React.Fragment>
                 <Form>
                     <Row form className="my-0">
-                        <Col md={6}>
+                        <Col md={this.props.inputCol}>
                             <FormGroup className="my-0">
                                 <Input value={this.props.value} onChange={e => this.props.setNewValue(e.target.value)}
                                        type="select" bsSize="sm">{options}</Input>
                             </FormGroup>
                         </Col>
-                        <Col md={6}>
+                        <Col md={this.props.controlsCol}>
                             {this.props.controls}
                         </Col>
                     </Row>
