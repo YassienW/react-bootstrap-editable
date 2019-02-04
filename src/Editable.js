@@ -11,8 +11,8 @@ export default class Editable extends React.Component{
         super(props)
 
         this.state = {
-            value: this.props.value,
-            newValue: this.props.value,
+            value: this.props.initialValue,
+            newValue: this.props.initialValue,
             isEditing: false,
             validationText: null,
             isLoading: false,
@@ -141,7 +141,7 @@ export default class Editable extends React.Component{
 Editable.defaultProps = {
     type: "textfield",
     mode: "inline",
-    value: null,
+    initialValue: null,
     id: null,
     label: null,
     disabled: false,
@@ -160,7 +160,7 @@ Editable.defaultProps = {
 Editable.propTypes = {
     type: PropTypes.oneOf(["textfield", "textarea", "select", "date"]).isRequired,
     mode: PropTypes.oneOf(["inline", "popup"]).isRequired,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.instanceOf(Date)]),
+    initialValue: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
     id: PropTypes.string,
     label: PropTypes.string,
     disabled: PropTypes.bool,
