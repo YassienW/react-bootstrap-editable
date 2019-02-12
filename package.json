@@ -1,6 +1,7 @@
 {
   "name": "react-bootstrap-editable",
-  "version": "0.3.0",
+  "keywords": ["react", "bootstrap", "editable", "xeditable", "edit", "ajax"],
+  "version": "0.3.1",
   "main": "dist/editable.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -36,7 +37,6 @@
     "@storybook/react": "^4.1.11",
     "babel-loader": "^8.0.5",
     "browserify": "^16.2.3",
-    "envify": "^4.1.0",
     "uglify-js": "^3.4.9",
     "uglifyify": "^5.0.1"
   },
