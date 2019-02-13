@@ -1,5 +1,5 @@
 import React from "react"
-import {Form, FormGroup, Input, Row, Col} from "reactstrap";
+import {Form, FormGroup, Input, Row, Col, FormText} from "reactstrap";
 
 export default class TextField extends React.Component {
     constructor(props){
@@ -23,6 +23,7 @@ export default class TextField extends React.Component {
                             {this.props.controls}
                         </Col>
                     </Row>
+                    <FormText className="mt-0">{this.props.validationText}</FormText>
                 </Form>
             </React.Fragment>
         )

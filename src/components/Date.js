@@ -22,8 +22,8 @@ export default class Date extends React.Component {
                             {this.props.controls}
                         </Col>
                     </Row>
+                    <FormText className="mt-0">{this.props.validationText}</FormText>
                 </Form>
-                <FormText className="mt-0">{this.props.validationText}</FormText>
             </React.Fragment>
         )
     }
