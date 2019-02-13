@@ -39,6 +39,8 @@ export default class Editable extends React.Component{
         }
         let commonProps = {
             value: this.state.newValue,
+            validationText: this.state.validationText,
+            className: this.props.className,
             controls: controls,
             setNewValue: (newValue) => this.setState({newValue: newValue}),
             onCancel: () => this.onCancel(),
@@ -47,11 +49,11 @@ export default class Editable extends React.Component{
         }
         switch(this.props.type){
             case "textfield":
-                return <TextField {...commonProps} validationText={this.state.validationText}/>
+                return <TextField {...commonProps}/>
             case "select":
                 return <Select {...commonProps} options={this.props.options}/>
             case "date":
-                return <DateComponent {...commonProps} validationText={this.state.validationText}/>
+                return <DateComponent {...commonProps}/>
             case "textarea":
                 return null
             default:
@@ -130,7 +132,7 @@ export default class Editable extends React.Component{
             h = this.props.label? `${this.props.label}: ${h}` : h
 
             return(
-                <Form inline>
+                <Form className={this.props.className} inline>
                     {h && <h6 className="my-0 mr-1">{h}</h6>}
                     {a && <a href="javascript:;" onClick={() => this.setState({isEditing: true})}>{a}</a>}
                 </Form>
@@ -141,6 +143,7 @@ export default class Editable extends React.Component{
 Editable.defaultProps = {
     type: "textfield",
     mode: "inline",
+    className: null,
     initialValue: null,
     id: null,
     label: null,
@@ -160,6 +163,7 @@ Editable.defaultProps = {
 Editable.propTypes = {
     type: PropTypes.oneOf(["textfield", "textarea", "select", "date"]).isRequired,
     mode: PropTypes.oneOf(["inline", "popup"]).isRequired,
+    className: PropTypes.string,
     initialValue: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
     id: PropTypes.string,
     label: PropTypes.string,

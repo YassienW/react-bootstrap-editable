@@ -9,7 +9,7 @@ export default class Date extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <Form>
+                <Form className={this.props.className}>
                     <Row form className="my-0">
                         <Col md={this.props.inputCol}>
                             <FormGroup className="my-0">
