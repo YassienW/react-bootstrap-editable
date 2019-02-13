@@ -10,9 +10,15 @@ export default class Editable extends React.Component{
     constructor(props){
         super(props)
 
+        let initialValue = this.props.initialValue
+
+        if(this.props.type === "date" && initialValue && !this.props.initialValue.toISOString){
+            initialValue = new Date(this.props.initialValue)
+        }
+
         this.state = {
-            value: this.props.initialValue,
-            newValue: this.props.initialValue,
+            value: initialValue,
+            newValue: initialValue,
             isEditing: false,
             validationText: null,
             isLoading: false,
@@ -57,7 +63,7 @@ export default class Editable extends React.Component{
             case "textarea":
                 return null
             default:
-                console.error(`Editable: "${this.props.type}" is not a valid value for the type prop`)
+                console.error(`Editable: "${this.props.type}" is not a valid value for the 'type' prop`)
                 return null
         }
     }
@@ -115,7 +121,7 @@ export default class Editable extends React.Component{
         }else{
             let value = this.state.value? this.state.value: "No value"
             //format date objects for display, might add a custom format function here later
-            value = this.state.value instanceof Date ? this.state.value.toUTCString().slice(4, 16) : value
+            value = this.props.type === "date" && this.state.value? this.state.value.toUTCString().slice(4, 16) : value
 
             let h = "", a = ""
             if(this.props.isValueClickable){
