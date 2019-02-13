@@ -18,7 +18,7 @@ export default class Date extends React.Component {
                                        onChange={e => this.props.setNewValue(e.target.valueAsDate)} />
                             </FormGroup>
                         </Col>
-                        <Col md={this.props.controlsCol}>
+                        <Col className="my-auto" md={this.props.controlsCol}>
                             {this.props.controls}
                         </Col>
                     </Row>

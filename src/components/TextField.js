@@ -18,7 +18,7 @@ export default class TextField extends React.Component {
                                        type="text" bsSize="sm"/>
                             </FormGroup>
                         </Col>
-                        <Col md={this.props.controlsCol}>
+                        <Col className="my-auto" md={this.props.controlsCol}>
                             {this.props.controls}
                         </Col>
                     </Row>

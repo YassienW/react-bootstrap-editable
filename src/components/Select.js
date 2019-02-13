@@ -19,7 +19,7 @@ export default class TextField extends React.Component {
                                        type="select" bsSize="sm">{options}</Input>
                             </FormGroup>
                         </Col>
-                        <Col md={this.props.controlsCol}>
+                        <Col className="my-auto" md={this.props.controlsCol}>
                             {this.props.controls}
                         </Col>
                     </Row>

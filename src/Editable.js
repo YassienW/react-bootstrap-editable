@@ -42,7 +42,11 @@ export default class Editable extends React.Component{
             </React.Fragment>
         )
         if(this.state.isLoading){
-            controls = (<p className="my-0">Loading...</p>)
+            controls = (
+                <div className="spinner-border spinner-border-sm my-auto" role="status"
+                     style={{width: "1.5em", height: "1.5em"}} >
+                    <span className="sr-only">Loading...</span>
+                </div>)
         }
         let commonProps = {
             value: this.state.newValue,
