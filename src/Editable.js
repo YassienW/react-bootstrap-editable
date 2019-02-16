@@ -128,23 +128,23 @@ export default class Editable extends React.Component{
             //format date objects for display, might add a custom format function here later
             value = this.props.type === "date" && this.state.value? this.state.value.toUTCString().slice(4, 16) : value
 
-            let h = "", a = ""
+            let p = "", a = ""
             if(this.props.isValueClickable){
                 if(this.props.disabled){
-                    h = value
+                    p = value
                 }else{
                     a = value
                 }
             }else{
-                h = value
+                p = value
                 a = this.props.disabled? a : this.props.editText
             }
             //add label if applicable
-            h = this.props.label? `${this.props.label}: ${h}` : h
+            p = this.props.label? `${this.props.label}: ${p}` : p
 
             return(
                 <Form className={this.props.className} inline>
-                    {h && <h6 className="my-0 mr-1">{h}</h6>}
+                    {p && this.props.showText && <p className="my-0 mr-1">{p}</p>}
                     {a && <a href="javascript:;" onClick={() => this.setState({isEditing: true})}>{a}</a>}
                 </Form>
             )
