@@ -126,7 +126,8 @@ export default class Editable extends React.Component{
         }else{
             let value = this.state.value? this.state.value: "No value"
             //format date objects for display, might add a custom format function here later
-            value = this.props.type === "date" && this.state.value? this.state.value.toUTCString().slice(4, 16) : value
+            value = this.props.type === "date" && this.state.value? this.state.value.toUTCString().slice(5, 16) : value
+            value = this.props.type === "file" && this.state.value? this.state.value.name : value
 
             let p = "", a = ""
             if(this.props.isValueClickable){
