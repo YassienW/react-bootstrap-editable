@@ -2,9 +2,9 @@ import React from "react"
 import PropTypes from "prop-types";
 import TextField from "./components/TextField";
 import Select from "./components/Select";
-//using this in order not to get mixed up with Date objects
-import DateComponent from "./components/Date";
-import {Button, Form} from "reactstrap";
+import Date from "./components/Date";
+import {Button, Form, UncontrolledPopover, PopoverHeader, PopoverBody, Popover} from "reactstrap";
+import File from "./components/File";
 
 export default class Editable extends React.Component{
     constructor(props){
@@ -64,11 +64,11 @@ export default class Editable extends React.Component{
             case "select":
                 return <Select {...commonProps} options={this.props.options}/>
             case "date":
-                return <DateComponent {...commonProps}/>
+                return <Date {...commonProps}/>
             case "textarea":
                 return null
             default:
-                console.error(`Editable(${this.props.id}): "${this.props.type}" is not a valid value for the 'type' prop`)
+                console.error(`Editable(${this.props.id}): "${this.props.type}" is not a valid value for the "type" prop`)
                 return null
         }
     }
