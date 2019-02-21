@@ -27,7 +27,7 @@ export default class Editable extends React.Component{
     componentDidUpdate(prevProps, prevState){
         //update initial value if the prop got updated
         if(prevProps.initialValue !== this.props.initialValue){
-            this.setState({value: this.props.initialValue})
+            this.setState({value: this.props.initialValue, newValue: this.props.initialValue})
         }
     }
     getEditingComponent(){
