@@ -67,6 +67,8 @@ export default class Editable extends React.Component{
                 return <Date {...commonProps}/>
             case "textarea":
                 return null
+            case "file":
+                return <File {...commonProps} label={this.props.label}/>
             default:
                 console.error(`Editable(${this.props.id}): "${this.props.type}" is not a valid value for the "type" prop`)
                 return null
@@ -121,7 +123,7 @@ export default class Editable extends React.Component{
         }
     }
     render(){
-        if(this.state.isEditing){
+        if((this.state.isEditing || this.props.alwaysEditing) && this.props.mode === "inline"){
             return(this.getEditingComponent())
         }else{
             let value = this.state.value? this.state.value: "No value"
@@ -155,10 +157,12 @@ export default class Editable extends React.Component{
 Editable.defaultProps = {
     type: "textfield",
     mode: "inline",
+    alwaysEditing: false,
     className: null,
     initialValue: null,
     id: null,
     label: null,
+    showText: true,
     disabled: false,
     isValueClickable: false,
     editText: "Edit",
@@ -179,6 +183,7 @@ Editable.propTypes = {
     initialValue: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
     id: PropTypes.string,
     label: PropTypes.string,
+    showText: PropTypes.bool,
     disabled: PropTypes.bool,
     isValueClickable: PropTypes.bool,
     editText: PropTypes.string,
