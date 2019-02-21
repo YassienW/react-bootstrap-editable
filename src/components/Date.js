@@ -8,14 +8,16 @@ export default class Date extends React.Component {
 
     render() {
         let date = this.props.value
-        date = date.toISOString? date.toISOString().slice(0, 10): new window.Date(date).toISOString().slice(0, 10)
+        if(date){
+            date = date.toISOString? date.toISOString().slice(0, 10): new window.Date(date).toISOString().slice(0, 10)
+        }
         return (
             <React.Fragment>
                 <Form className={this.props.className}>
                     <Row form className="my-0">
                         <Col md={this.props.inputCol}>
                             <FormGroup className="my-0">
-                                <Input value={date} type="date" bsSize="sm"
+                                <Input value={date? date : ""} type="date" bsSize="sm"
                                        onChange={e => this.props.setNewValue(e.target.valueAsDate)}/>
                             </FormGroup>
                         </Col>
