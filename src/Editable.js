@@ -19,7 +19,7 @@ export default class Editable extends React.Component{
         }
     }
     componentDidMount() {
-        if(this.props.ajax && !this.props.validate){
+        if(this.props.ajax && !this.props.validate && !this.props.disabled){
             console.error(`Editable(${this.props.id}): You provided an ajax prop without a validate prop; 
             ajax function will not be called`)
         }
