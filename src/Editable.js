@@ -24,6 +24,12 @@ export default class Editable extends React.Component{
             ajax function will not be called`)
         }
     }
+    componentDidUpdate(prevProps, prevState){
+        //update initial value if the prop got updated
+        if(prevProps.initialValue !== this.props.initialValue){
+            this.setState({value: this.props.initialValue})
+        }
+    }
     getEditingComponent(){
         let controls = (
             <React.Fragment>
