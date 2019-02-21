@@ -10,15 +10,9 @@ export default class Editable extends React.Component{
     constructor(props){
         super(props)
 
-        let initialValue = this.props.initialValue
-
-        if(this.props.type === "date" && initialValue && !this.props.initialValue.toISOString){
-            initialValue = new Date(this.props.initialValue)
-        }
-
         this.state = {
-            value: initialValue,
-            newValue: initialValue,
+            value: this.props.initialValue,
+            newValue: this.props.initialValue,
             isEditing: false,
             validationText: null,
             isLoading: false,
@@ -126,7 +120,7 @@ export default class Editable extends React.Component{
         }else{
             let value = this.state.value? this.state.value: "No value"
             //format date objects for display, might add a custom format function here later
-            value = this.props.type === "date" && this.state.value? this.state.value.toUTCString().slice(5, 16) : value
+            value = this.props.type === "date" && this.state.value? new window.Date(this.state.value).toUTCString().slice(5, 16) : value
             value = this.props.type === "file" && this.state.value? this.state.value.name : value
 
             let p = "", a = ""
