@@ -51,28 +51,38 @@ export default class Editable extends React.Component{
         let commonProps = {
             value: this.state.newValue,
             validationText: this.state.validationText,
-            className: this.props.className,
             controls: controls,
             setNewValue: (newValue) => this.setState({newValue: newValue}),
             onCancel: () => this.onCancel(),
-            inputCol: this.props.inputCol,
-            controlsCol: this.props.controlsCol,
-        }
+        };
+        let component;
         switch(this.props.type){
             case "textfield":
-                return <TextField {...commonProps}/>
+                component =  <TextField {...commonProps}/>;
+                break;
             case "select":
-                return <Select {...commonProps} options={this.props.options}/>
+                component = <Select {...commonProps} options={this.props.options}/>;
+                break;
             case "date":
-                return <Date {...commonProps}/>
+                component = <Date {...commonProps}/>;
+                break;
             case "textarea":
-                return null
+                return null;
             case "file":
-                return <File {...commonProps} label={this.props.label}/>
+                component = <File {...commonProps} label={this.props.label}/>;
+                break;
             default:
                 console.error(`Editable(${this.props.id}): "${this.props.type}" is not a valid value for the "type" prop`)
                 return null
         }
+        return(
+            <Form className={this.props.className}>
+                <div className="align-items-baseline d-flex">
+                    {component}
+                </div>
+                <FormText className="mt-0">{this.state.validationText}</FormText>
+            </Form>
+        )
     }
     onCancel(){
         //reset validation text AND new value, all back to initial
