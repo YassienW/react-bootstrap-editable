@@ -1,5 +1,5 @@
 import React from "react"
-import {Col, Form, FormGroup, FormText, Input, Row} from "reactstrap";
+import {Input} from "reactstrap";
 
 export default class Date extends React.Component {
     constructor(props) {
@@ -7,23 +7,15 @@ export default class Date extends React.Component {
     }
 
     render() {
+        let date = this.props.value
+        if(date){
+            date = date.toISOString? date.toISOString().slice(0, 10): new window.Date(date).toISOString().slice(0, 10)
+        }
         return (
             <React.Fragment>
-                <Form>
-                    <Row form className="my-0">
-                        <Col md={this.props.inputCol}>
-                            <FormGroup className="my-0">
-                                <Input value={this.props.value? this.props.value.toISOString().slice(0, 10): ""}
-                                       type="date" bsSize="sm"
-                                       onChange={e => this.props.setNewValue(e.target.valueAsDate)} />
-                            </FormGroup>
-                        </Col>
-                        <Col md={this.props.controlsCol}>
-                            {this.props.controls}
-                        </Col>
-                    </Row>
-                </Form>
-                <FormText className="mt-0">{this.props.validationText}</FormText>
+                <Input value={date? date : ""} type="date" bsSize="sm" className="mr-1"
+                       onChange={e => this.props.setNewValue(e.target.valueAsDate)}/>
+                {this.props.controls}
             </React.Fragment>
         )
     }

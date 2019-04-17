@@ -2,9 +2,9 @@ import React from "react"
 import PropTypes from "prop-types";
 import TextField from "./components/TextField";
 import Select from "./components/Select";
-//using this in order not to get mixed up with Date objects
-import DateComponent from "./components/Date";
-import {Button, Form} from "reactstrap";
+import Date from "./components/Date";
+import {Button, Form, PopoverHeader, PopoverBody, Popover, Spinner, FormText} from "reactstrap";
+import File from "./components/File";
 
 export default class Editable extends React.Component{
     constructor(props){
@@ -16,11 +16,20 @@ export default class Editable extends React.Component{
             isEditing: false,
             validationText: null,
             isLoading: false,
-        }
+        };
+        //used for popover mode
+        this.clickableLink = React.createRef();
     }
     componentDidMount() {
-        if(this.props.ajax && !this.props.validate){
-            console.error(`Editable: You provided an ajax prop without a validate prop; ajax function will not be called`)
+        if(this.props.ajax && !this.props.validate && !this.props.disabled){
+            console.error(`Editable(${this.props.id}): You provided an ajax prop without a validate prop; 
+            ajax function will not be called`)
+        }
+    }
+    componentDidUpdate(prevProps, prevState){
+        //update initial value if the prop got updated
+        if(prevProps.initialValue !== this.props.initialValue){
+            this.setState({value: this.props.initialValue, newValue: this.props.initialValue})
         }
     }
     getEditingComponent(){
@@ -35,29 +44,46 @@ export default class Editable extends React.Component{
             </React.Fragment>
         )
         if(this.state.isLoading){
-            controls = (<p className="my-0">Loading...</p>)
+            controls = (
+                <div className="my-auto mx-4">
+                    <Spinner  style={{width: "1.5rem", height: "1.5rem"}}/>
+                </div>)
         }
         let commonProps = {
             value: this.state.newValue,
+            validationText: this.state.validationText,
             controls: controls,
             setNewValue: (newValue) => this.setState({newValue: newValue}),
-            onCancel: () => this.onCancel(),
-            inputCol: this.props.inputCol,
-            controlsCol: this.props.controlsCol,
-        }
+            onCancel: () => this.onCancel()
+        };
+        let component;
         switch(this.props.type){
             case "textfield":
-                return <TextField {...commonProps} validationText={this.state.validationText}/>
+                component =  <TextField {...commonProps}/>;
+                break;
             case "select":
-                return <Select {...commonProps} options={this.props.options}/>
+                component = <Select {...commonProps} options={this.props.options}/>;
+                break;
             case "date":
-                return <DateComponent {...commonProps} validationText={this.state.validationText}/>
+                component = <Date {...commonProps}/>;
+                break;
             case "textarea":
-                return null
+                return null;
+            case "file":
+                component = <File {...commonProps} label={this.props.label}/>;
+                break;
             default:
-                console.error(`Editable: "${this.props.type}" is not a valid value for the type prop`)
+                console.error(`Editable(${this.props.id}): "${this.props.type}" is not a valid value for the "type" prop`)
                 return null
         }
+        return(
+            <Form className={this.props.className}>
+                <div className="align-items-baseline d-flex">
+                    {component}
+                </div>
+                <FormText className="mt-0">{this.state.validationText}</FormText>
+            </Form>
+        )
     }
     onCancel(){
         //reset validation text AND new value, all back to initial
@@ -80,7 +106,7 @@ export default class Editable extends React.Component{
         if(this.props.onValidated){
             this.props.onValidated(validValue)
         }else if(!this.props.ajax){
-            console.error("Editable: Specified a validate function without onValidated or ajax")
+            console.error(`Editable(${this.props.id}): Specified a validate function without onValidated or ajax`)
         }
 
         if(this.props.ajax && validValue !== this.state.value){
@@ -108,31 +134,40 @@ export default class Editable extends React.Component{
         }
     }
     render(){
-        if(this.state.isEditing){
+        if((this.state.isEditing || this.props.alwaysEditing) && this.props.mode === "inline"){
             return(this.getEditingComponent())
         }else{
             let value = this.state.value? this.state.value: "No value"
             //format date objects for display, might add a custom format function here later
-            value = this.state.value instanceof Date ? this.state.value.toUTCString().slice(4, 16) : value
+            value = this.props.type === "date" && this.state.value? new window.Date(this.state.value).toUTCString().slice(5, 16) : value
+            value = this.props.type === "file" && this.state.value? this.state.value.name : value
 
-            let h = "", a = ""
+            let p = "", a = "";
             if(this.props.isValueClickable){
                 if(this.props.disabled){
-                    h = value
+                    p = value
                 }else{
                     a = value
                 }
             }else{
-                h = value
+                p = value
                 a = this.props.disabled? a : this.props.editText
             }
             //add label if applicable
-            h = this.props.label? `${this.props.label}: ${h}` : h
+            p = this.props.label? `${this.props.label}: ${p}` : p;
+            let popover = this.props.mode === "popover"?(
+                <Popover isOpen={this.state.isEditing} placement={this.props.placement} target={this.clickableLink}>
+                    <PopoverHeader>{this.props.label}</PopoverHeader>
+                    <PopoverBody>{this.getEditingComponent()}</PopoverBody>
+                </Popover>
+            ) : null;
 
             return(
-                <Form inline>
-                    {h && <h6 className="my-0 mr-1">{h}</h6>}
-                    {a && <a href="javascript:;" onClick={() => this.setState({isEditing: true})}>{a}</a>}
+                <Form className={this.props.className} inline>
+                    {p && this.props.showText && <p className="my-0">{p}</p>}
+                    {a && <a ref={this.clickableLink} className="ml-1" href="javascript:;"
+                             onClick={() => this.setState({isEditing: true})}>{a}</a>}
+                    {popover}
                 </Form>
             )
         }
@@ -141,14 +176,17 @@ export default class Editable extends React.Component{
 Editable.defaultProps = {
     type: "textfield",
     mode: "inline",
+    alwaysEditing: false,
+    className: null,
     initialValue: null,
     id: null,
     label: null,
+    showText: true,
     disabled: false,
     isValueClickable: false,
     editText: "Edit",
-    inputCol: 6,
-    controlsCol: 6,
+    //popover
+    placement: "top",
     //functions
     validate: null,
     ajax: null,
@@ -158,16 +196,20 @@ Editable.defaultProps = {
     options: null
 }
 Editable.propTypes = {
-    type: PropTypes.oneOf(["textfield", "textarea", "select", "date"]).isRequired,
-    mode: PropTypes.oneOf(["inline", "popup"]).isRequired,
+    type: PropTypes.oneOf(["textfield", "textarea", "select", "date", "file"]).isRequired,
+    mode: PropTypes.oneOf(["inline", "popover"]).isRequired,
+    alwaysEditing: PropTypes.bool,
+    className: PropTypes.string,
     initialValue: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
     id: PropTypes.string,
     label: PropTypes.string,
+    showText: PropTypes.bool,
     disabled: PropTypes.bool,
     isValueClickable: PropTypes.bool,
     editText: PropTypes.string,
-    inputCol: PropTypes.number,
-    controlsCol: PropTypes.number,
+    //popover
+    placement: PropTypes.oneOf(["auto", "auto-start", "auto-end", "top", "top-start", "top-end", "right", "right-start",
+        "right-end", "bottom", "bottom-start", "bottom-end", "left", "left-start", "left-end"]),
     //functions
     validate: PropTypes.func,
     ajax: PropTypes.func,

@@ -1,5 +1,5 @@
 import React from "react"
-import {Form, FormGroup, Input, Row, Col} from "reactstrap";
+import {Input} from "reactstrap";
 
 export default class TextField extends React.Component {
     constructor(props){
@@ -11,19 +11,9 @@ export default class TextField extends React.Component {
         })
         return (
             <React.Fragment>
-                <Form>
-                    <Row form className="my-0">
-                        <Col md={this.props.inputCol}>
-                            <FormGroup className="my-0">
-                                <Input value={this.props.value} onChange={e => this.props.setNewValue(e.target.value)}
-                                       type="select" bsSize="sm">{options}</Input>
-                            </FormGroup>
-                        </Col>
-                        <Col md={this.props.controlsCol}>
-                            {this.props.controls}
-                        </Col>
-                    </Row>
-                </Form>
+                <Input value={this.props.value} onChange={e => this.props.setNewValue(e.target.value)}
+                       type="select" bsSize="sm" className="mr-1">{options}</Input>
+                {this.props.controls}
             </React.Fragment>
         )
     }
