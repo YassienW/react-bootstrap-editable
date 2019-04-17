@@ -13,9 +13,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6969 -c .storybook",
-    "babel": "babel src -d scripts",
-    "browserify": "browserify ./scripts/Editable.js -s Editable -g uglifyify | uglifyjs --compress --mangle > ./dist/editable.js",
-    "dist": "npm run babel && npm run browserify",
+    "dist": "browserify src/Editable.js -t [ babelify ] -g uglifyify | uglifyjs -c -m > dist/editable.js",
     "distdocs": "build-storybook -c .storybook -o docs"
   },
   "babel": {
@@ -43,7 +41,9 @@
     "@storybook/addons": "^5.0.9",
     "@storybook/react": "^5.1.0-alpha.29",
     "babel-loader": "^8.0.5",
+    "babelify": "^10.0.0",
     "browserify": "^16.2.3",
+    "envify": "^4.1.0",
     "uglify-js": "^3.5.4",
     "uglifyify": "^5.0.1"
   },
