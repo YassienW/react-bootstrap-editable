@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types";
 import TextField from "./components/TextField";
+import TextArea from "./components/TextArea";
 import Select from "./components/Select";
 import Date from "./components/Date";
 import {Button, Form, PopoverHeader, PopoverBody, Popover, Spinner, FormText} from "reactstrap";
@@ -35,7 +36,7 @@ export default class Editable extends React.Component{
     getEditingComponent(){
         let controls = (
             <React.Fragment>
-                <Button className="mr-1" color="success" size="sm" onClick={() => this.onSubmit(this.state.newValue)}>
+                <Button className="ml-auto mr-1" color="success" size="sm" onClick={() => this.onSubmit(this.state.newValue)}>
                     <i className="fa fa-check fa-fw"/>
                 </Button>
                 <Button color="danger" size="sm" onClick={() => this.onCancel()}>
@@ -68,7 +69,14 @@ export default class Editable extends React.Component{
                 component = <Date {...commonProps}/>;
                 break;
             case "textarea":
-                return null;
+                return (
+                    <Form>
+                        <TextArea {...commonProps}/>
+                        <div className="d-flex align-items-start">
+                            <FormText className="mt-0">{this.state.validationText}</FormText>
+                            {controls}
+                        </div>
+                    </Form>);
             case "file":
                 component = <File {...commonProps} label={this.props.label}/>;
                 break;
@@ -119,11 +127,11 @@ export default class Editable extends React.Component{
         this.setState({isLoading: true})
         let xhr = new XMLHttpRequest()
         //this will call the user's ajax function, allowing him to set up the xhr object however he wants
-        this.props.ajax(xhr, validValue, this.props.id)
+        this.props.ajax(xhr, validValue, this.props.id);
         //consume the user's on ready state change function to call it later before the editable's
         let onReadyStateChange = xhr.onreadystatechange? xhr.onreadystatechange : null
         xhr.onreadystatechange = () => {
-            onReadyStateChange? onReadyStateChange() : null
+            onReadyStateChange? onReadyStateChange() : null;
             if(xhr.readyState === 4){
                 if(xhr.status === 200){
                     this.setState({isLoading: false, isEditing: false, value: validValue, validationText: null})
@@ -156,7 +164,8 @@ export default class Editable extends React.Component{
             //add label if applicable
             p = this.props.label? `${this.props.label}: ${p}` : p;
             let popover = this.props.mode === "popover"?(
-                <Popover isOpen={this.state.isEditing} placement={this.props.placement} target={this.clickableLink}>
+                <Popover isOpen={this.state.isEditing} placement={this.props.placement}
+                         target={this.clickableLink}>
                     <PopoverHeader>{this.props.label}</PopoverHeader>
                     <PopoverBody>{this.getEditingComponent()}</PopoverBody>
                 </Popover>
@@ -164,8 +173,8 @@ export default class Editable extends React.Component{
 
             return(
                 <Form className={this.props.className} inline>
-                    {p && this.props.showText && <p className="my-0">{p}</p>}
-                    {a && <a ref={this.clickableLink} className="ml-1" href="javascript:;"
+                    {p && this.props.showText && <p className="my-0" style={{"whiteSpace": "pre-wrap"}}>{p}</p>}
+                    {a && <a ref={this.clickableLink} className="ml-1 mt-auto" href="javascript:"
                              onClick={() => this.setState({isEditing: true})}>{a}</a>}
                     {popover}
                 </Form>
