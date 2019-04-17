@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import TextField from "./components/TextField";
 import Select from "./components/Select";
 import Date from "./components/Date";
-import {Button, Form, UncontrolledPopover, PopoverHeader, PopoverBody, Popover} from "reactstrap";
+import {Button, Form, PopoverHeader, PopoverBody, Popover, Spinner, FormText} from "reactstrap";
 import File from "./components/File";
 
 export default class Editable extends React.Component{
@@ -16,7 +16,9 @@ export default class Editable extends React.Component{
             isEditing: false,
             validationText: null,
             isLoading: false,
-        }
+        };
+        //used for popover mode
+        this.clickableLink = React.createRef();
     }
     componentDidMount() {
         if(this.props.ajax && !this.props.validate && !this.props.disabled){
@@ -52,7 +54,7 @@ export default class Editable extends React.Component{
             validationText: this.state.validationText,
             controls: controls,
             setNewValue: (newValue) => this.setState({newValue: newValue}),
-            onCancel: () => this.onCancel(),
+            onCancel: () => this.onCancel()
         };
         let component;
         switch(this.props.type){
@@ -140,7 +142,7 @@ export default class Editable extends React.Component{
             value = this.props.type === "date" && this.state.value? new window.Date(this.state.value).toUTCString().slice(5, 16) : value
             value = this.props.type === "file" && this.state.value? this.state.value.name : value
 
-            let p = "", a = ""
+            let p = "", a = "";
             if(this.props.isValueClickable){
                 if(this.props.disabled){
                     p = value
@@ -152,12 +154,20 @@ export default class Editable extends React.Component{
                 a = this.props.disabled? a : this.props.editText
             }
             //add label if applicable
-            p = this.props.label? `${this.props.label}: ${p}` : p
+            p = this.props.label? `${this.props.label}: ${p}` : p;
+            let popover = this.props.mode === "popover"?(
+                <Popover isOpen={this.state.isEditing} placement={this.props.placement} target={this.clickableLink}>
+                    <PopoverHeader>{this.props.label}</PopoverHeader>
+                    <PopoverBody>{this.getEditingComponent()}</PopoverBody>
+                </Popover>
+            ) : null;
 
             return(
                 <Form className={this.props.className} inline>
-                    {p && this.props.showText && <p className="my-0 mr-1">{p}</p>}
-                    {a && <a href="javascript:;" onClick={() => this.setState({isEditing: true})}>{a}</a>}
+                    {p && this.props.showText && <p className="my-0">{p}</p>}
+                    {a && <a ref={this.clickableLink} className="ml-1" href="javascript:;"
+                             onClick={() => this.setState({isEditing: true})}>{a}</a>}
+                    {popover}
                 </Form>
             )
         }
@@ -175,8 +185,8 @@ Editable.defaultProps = {
     disabled: false,
     isValueClickable: false,
     editText: "Edit",
-    inputCol: 6,
-    controlsCol: 6,
+    //popover
+    placement: "top",
     //functions
     validate: null,
     ajax: null,
@@ -186,8 +196,9 @@ Editable.defaultProps = {
     options: null
 }
 Editable.propTypes = {
-    type: PropTypes.oneOf(["textfield", "textarea", "select", "date"]).isRequired,
-    mode: PropTypes.oneOf(["inline", "popup"]).isRequired,
+    type: PropTypes.oneOf(["textfield", "textarea", "select", "date", "file"]).isRequired,
+    mode: PropTypes.oneOf(["inline", "popover"]).isRequired,
+    alwaysEditing: PropTypes.bool,
     className: PropTypes.string,
     initialValue: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
     id: PropTypes.string,
@@ -196,8 +207,9 @@ Editable.propTypes = {
     disabled: PropTypes.bool,
     isValueClickable: PropTypes.bool,
     editText: PropTypes.string,
-    inputCol: PropTypes.number,
-    controlsCol: PropTypes.number,
+    //popover
+    placement: PropTypes.oneOf(["auto", "auto-start", "auto-end", "top", "top-start", "top-end", "right", "right-start",
+        "right-end", "bottom", "bottom-start", "bottom-end", "left", "left-start", "left-end"]),
     //functions
     validate: PropTypes.func,
     ajax: PropTypes.func,
