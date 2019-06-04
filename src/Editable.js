@@ -210,7 +210,7 @@ Editable.propTypes = {
     alwaysEditing: PropTypes.bool,
     className: PropTypes.string,
     initialValue: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]),
-    id: PropTypes.string,
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     label: PropTypes.string,
     showText: PropTypes.bool,
     disabled: PropTypes.bool,
