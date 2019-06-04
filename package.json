@@ -13,7 +13,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6969 -c .storybook",
-    "dist": "browserify src/Editable.js -t [ babelify ] -g uglifyify | uglifyjs -c -m > dist/editable.js",
+    "dist": "browserify src/Editable.js -t [ babelify ] -s Editable -p [ tinyify ] > dist/editable.js",
     "distdocs": "build-storybook -c .storybook -o docs"
   },
   "babel": {
@@ -43,9 +43,7 @@
     "babel-loader": "^8.0.5",
     "babelify": "^10.0.0",
     "browserify": "^16.2.3",
-    "envify": "^4.1.0",
-    "uglify-js": "^3.5.4",
-    "uglifyify": "^5.0.1"
+    "tinyify": "^2.5.1"
   },
   "description": "Clean editable bootstrap components for react. Ajax support!",
   "directories": {
