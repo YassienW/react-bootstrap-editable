@@ -6,10 +6,14 @@ import Select from "./components/Select";
 import Date from "./components/Date";
 import {Button, Form, PopoverHeader, PopoverBody, Popover, Spinner, FormText} from "reactstrap";
 import File from "./components/File";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+//have to do this since tree shaking doesn't work for some reason...
+import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
+import {faTimes} from '@fortawesome/free-solid-svg-icons/faTimes';
 
 export default class Editable extends React.Component{
     constructor(props){
-        super(props)
+        super(props);
 
         this.state = {
             value: this.props.initialValue,
@@ -37,10 +41,10 @@ export default class Editable extends React.Component{
         let controls = (
             <React.Fragment>
                 <Button className="ml-auto mr-1" color="success" size="sm" onClick={() => this.onSubmit(this.state.newValue)}>
-                    <i className="fa fa-check fa-fw"/>
+                    <FontAwesomeIcon icon={faCheck} fixedWidth/>
                 </Button>
                 <Button color="danger" size="sm" onClick={() => this.onCancel()}>
-                    <i className="fa fa-times fa-fw"/>
+                    <FontAwesomeIcon icon={faTimes} fixedWidth/>
                 </Button>
             </React.Fragment>
         )
