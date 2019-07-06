@@ -1,6 +1,7 @@
 # React Bootstrap Editable
  
 Clean editable bootstrap components for react. Ajax support!
+Check the [documentation](https://yassienw.github.io/react-bootstrap-editable)
 
 **All feedback is highly appreciated. If you have any suggestions, want to see a feature
 implemented or face any bugs, don't hesitate to [submit an issue](https://github.com/YassienW/react-bootstrap-editable/issues/new)**
