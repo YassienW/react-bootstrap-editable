@@ -2,9 +2,8 @@
  
 Clean editable bootstrap components for react. Ajax support!
 
-**Project is under rapid development, always check the
-[documentation](https://yassienw.github.io/react-bootstrap-editable/) 
-for the latest additions**
+**All feedback is highly appreciated. If you have any suggestions, want to see a feature
+implemented or face any bugs, don't hesitate to [submit an issue](https://github.com/YassienW/react-bootstrap-editable/issues/new)**
 
 ## Installation
 
@@ -12,7 +11,22 @@ for the latest additions**
 npm i react-bootstrap-editable
 ```
 
+You will also need bootstrap4's CSS in your project
+
 ## Changelog:
+### On the horizon:
+- Custom components
+- Custom buttons/icons
+- More ajax configuration
+- Better documentation?
+
+### 0.5.0:
+- Reduced bundle size by 50%
+- id prop now accepts both strings and numbers
+- FontAwesome is now included in the dist
+- Updated Storybook (code snippets now work properly)
+- Added an interactive demo on Storybook, check it out [here](https://yassienw.github.io/react-bootstrap-editable)
+
 ### 0.4.0:
 - Added className prop
 - Updating initialValue prop without remounting now updates the editable value
