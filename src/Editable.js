@@ -228,6 +228,9 @@ Editable.propTypes = {
     ajax: PropTypes.func,
     onSubmit: PropTypes.func,
     onValidated: PropTypes.func,
-    //select props
+    /** Popover mode only */
+    placement: PropTypes.oneOf(["auto", "auto-start", "auto-end", "top", "top-start", "top-end", "right", "right-start",
+        "right-end", "bottom", "bottom-start", "bottom-end", "left", "left-start", "left-end"]),
+    /** Select only */
     options: PropTypes.array,
 };
