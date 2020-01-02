@@ -47,7 +47,7 @@ export default class Editable extends React.Component{
                     <FontAwesomeIcon icon={faTimes} fixedWidth/>
                 </Button>
             </React.Fragment>
-        )
+        );
         if(this.state.isLoading){
             controls = (
                 <div className="my-auto mx-4">
@@ -207,7 +207,7 @@ Editable.defaultProps = {
     onValidated: null,
     //select props
     options: null
-}
+};
 Editable.propTypes = {
     type: PropTypes.oneOf(["textfield", "textarea", "select", "date", "file"]).isRequired,
     mode: PropTypes.oneOf(["inline", "popover"]).isRequired,
@@ -230,4 +230,4 @@ Editable.propTypes = {
     onValidated: PropTypes.func,
     //select props
     options: PropTypes.array,
-}
+};
