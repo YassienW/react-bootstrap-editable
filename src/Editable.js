@@ -220,10 +220,6 @@ Editable.propTypes = {
     disabled: PropTypes.bool,
     isValueClickable: PropTypes.bool,
     editText: PropTypes.string,
-    //popover
-    placement: PropTypes.oneOf(["auto", "auto-start", "auto-end", "top", "top-start", "top-end", "right", "right-start",
-        "right-end", "bottom", "bottom-start", "bottom-end", "left", "left-start", "left-end"]),
-    //functions
     validate: PropTypes.func,
     ajax: PropTypes.func,
     onSubmit: PropTypes.func,
