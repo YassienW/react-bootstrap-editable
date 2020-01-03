@@ -8,7 +8,7 @@
     "edit",
     "ajax"
   ],
-  "version": "0.5.1",
+  "version": "0.5.2",
   "main": "dist/editable.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
