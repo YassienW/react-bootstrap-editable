@@ -176,8 +176,8 @@ export default class Editable extends React.Component{
             return(
                 <Form className={this.props.className} inline>
                     {p && this.props.showText && <p className="my-0" style={{"whiteSpace": "pre-wrap"}}>{p}</p>}
-                    {a && <a ref={this.clickableLink} className="ml-1 mt-auto" href="javascript:"
-                             onClick={() => this.setState({isEditing: true})}>{a}</a>}
+                    {a && <a ref={this.clickableLink} className="ml-1 mt-auto" href="#"
+                             onClick={(e) => {e.preventDefault(); this.setState({isEditing: true})}}>{a}</a>}
                     {popover}
                 </Form>
             )
