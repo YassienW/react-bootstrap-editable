@@ -13,44 +13,47 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6969 -c .storybook",
-    "dist": "browserify src/Editable.js -t [ babelify ] -s Editable -p [ tinyify ] > dist/editable.js",
+    "dist": "rollup -c",
     "distdocs": "build-storybook -c .storybook -o docs"
   },
   "babel": {
     "presets": [
-      "@babel/preset-env",
+      [
+        "@babel/preset-env",
+        {
+          "modules": false
+        }
+      ],
       "@babel/preset-react"
     ]
   },
   "author": "Yassien",
   "license": "ISC",
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.19",
-    "@fortawesome/free-solid-svg-icons": "^5.9.0",
-    "@fortawesome/react-fontawesome": "^0.1.4",
+    "@fortawesome/fontawesome-svg-core": "^1.2.26",
+    "@fortawesome/free-solid-svg-icons": "^5.12.0",
+    "@fortawesome/react-fontawesome": "^0.1.8",
     "prop-types": "^15.7.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "reactstrap": "^8.0.0"
+    "react": "^16.12.0",
+    "reactstrap": "^8.2.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.5.0",
-    "@babel/core": "^7.5.0",
-    "@babel/preset-env": "^7.5.0",
-    "@babel/preset-react": "^7.0.0",
-    "@storybook/addon-actions": "^5.1.9",
-    "@storybook/addon-console": "^1.1.1",
-    "@storybook/addon-info": "^5.2.0-alpha.36",
-    "@storybook/addon-knobs": "^5.1.9",
-    "@storybook/addons": "^5.1.9",
-    "@storybook/react": "^5.1.9",
+    "@babel/cli": "^7.7.7",
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "@babel/preset-react": "^7.7.4",
+    "@rollup/plugin-node-resolve": "^6.0.0",
+    "@storybook/addon-actions": "^5.2.8",
+    "@storybook/addon-console": "^1.2.1",
+    "@storybook/addon-info": "^5.2.8",
+    "@storybook/addon-knobs": "^5.2.8",
+    "@storybook/addons": "^5.2.8",
+    "@storybook/react": "^5.2.8",
     "babel-loader": "^8.0.6",
-    "babelify": "^10.0.0",
-    "browserify": "^16.3.0",
-    "i": "^0.3.6",
-    "npm": "^6.10.0",
     "react-demo": "^2.0.0",
-    "tinyify": "^2.5.1"
+    "rollup": "^1.27.14",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-visualizer": "^3.3.1"
   },
   "description": "Clean editable bootstrap components for react. Ajax support!",
   "directories": {

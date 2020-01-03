@@ -7,9 +7,7 @@ import Date from "./components/Date";
 import {Button, Form, PopoverHeader, PopoverBody, Popover, Spinner, FormText} from "reactstrap";
 import File from "./components/File";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-//have to do this since tree shaking doesn't work for some reason...
-import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
-import {faTimes} from '@fortawesome/free-solid-svg-icons/faTimes';
+import {faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
 
 export default class Editable extends React.Component{
     constructor(props){
