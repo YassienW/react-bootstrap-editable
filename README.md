@@ -20,9 +20,12 @@ You will also need bootstrap4's CSS in your project
 ## Changelog:
 ### On the horizon:
 - Custom components
-- Custom buttons/icons
 - More ajax configuration
 - Better documentation?
+
+### 0.6.0:
+- Reduced bundle size to 16kb
+- Custom buttons
 
 ### 0.5.0:
 - Reduced bundle size by 50%
