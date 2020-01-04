@@ -6,8 +6,14 @@ import Select from "./components/Select";
 import Date from "./components/Date";
 import {Button, Form, PopoverHeader, PopoverBody, Popover, Spinner, FormText} from "reactstrap";
 import File from "./components/File";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
+
+const fontAwesomeStyle = {
+    textAlign: "center",
+    width: "1.25em",
+    height: "1em",
+    fill: "white",
+    verticalAlign: "-0.25em"
+};
 
 export default class Editable extends React.Component{
     constructor(props){
@@ -36,14 +42,32 @@ export default class Editable extends React.Component{
         }
     }
     getEditingComponent(){
+        let confirmButton = (
+            <Button className="ml-auto mr-1" color="success" size="sm" onClick={() => this.onSubmit(this.state.newValue)}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style={fontAwesomeStyle}>
+                    <path color="white" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/>
+                </svg>
+            </Button>
+        );
+        let cancelButton = (
+            <Button color="danger" size="sm" onClick={() => this.onCancel()}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" style={fontAwesomeStyle}>
+                    <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/>
+                </svg>
+            </Button>
+        );
+        if(React.isValidElement(this.props.renderConfirmElement)){
+            confirmButton = React.cloneElement(this.props.renderConfirmElement,
+                {onClick: (e) => {e.preventDefault(); this.onSubmit(this.state.newValue)}});
+        }
+        if(React.isValidElement(this.props.renderCancelElement)){
+            cancelButton = React.cloneElement(this.props.renderCancelElement,
+                {onClick: (e) => {e.preventDefault(); this.onCancel()}});
+        }
         let controls = (
             <React.Fragment>
-                <Button className="ml-auto mr-1" color="success" size="sm" onClick={() => this.onSubmit(this.state.newValue)}>
-                    <FontAwesomeIcon icon={faCheck} fixedWidth/>
-                </Button>
-                <Button color="danger" size="sm" onClick={() => this.onCancel()}>
-                    <FontAwesomeIcon icon={faTimes} fixedWidth/>
-                </Button>
+                {confirmButton}
+                {cancelButton}
             </React.Fragment>
         );
         if(this.state.isLoading){
@@ -176,8 +200,8 @@ export default class Editable extends React.Component{
             return(
                 <Form className={this.props.className} inline>
                     {p && this.props.showText && <p className="my-0" style={{"whiteSpace": "pre-wrap"}}>{p}</p>}
-                    {a && <a ref={this.clickableLink} className="ml-1 mt-auto" href="javascript:"
-                             onClick={() => this.setState({isEditing: true})}>{a}</a>}
+                    {a && <a ref={this.clickableLink} className="ml-1 mt-auto" href="#"
+                             onClick={(e) => {e.preventDefault(); this.setState({isEditing: true})}}>{a}</a>}
                     {popover}
                 </Form>
             )
@@ -196,6 +220,8 @@ Editable.defaultProps = {
     disabled: false,
     isValueClickable: false,
     editText: "Edit",
+    renderConfirmElement: null,
+    renderCancelElement: null,
     //popover
     placement: "top",
     //functions
@@ -218,6 +244,9 @@ Editable.propTypes = {
     disabled: PropTypes.bool,
     isValueClickable: PropTypes.bool,
     editText: PropTypes.string,
+    renderConfirmElement: PropTypes.element,
+    renderCancelElement: PropTypes.element,
+    /** Functions */
     validate: PropTypes.func,
     ajax: PropTypes.func,
     onSubmit: PropTypes.func,
