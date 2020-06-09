@@ -8,7 +8,7 @@
     "edit",
     "ajax"
   ],
-  "version": "0.6.2",
+  "version": "0.6.3",
   "main": "dist/editable.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -31,26 +31,26 @@
   "license": "ISC",
   "dependencies": {
     "prop-types": "^15.7.2",
-    "react": "^16.12.0",
-    "reactstrap": "^8.2.0"
+    "react": "^16.13.1",
+    "reactstrap": "^8.4.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.7",
-    "@babel/core": "^7.7.7",
-    "@babel/preset-env": "^7.7.7",
-    "@babel/preset-react": "^7.7.4",
-    "@rollup/plugin-node-resolve": "^6.0.0",
-    "@storybook/addon-actions": "^5.2.8",
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "@babel/preset-react": "^7.10.1",
+    "@rollup/plugin-node-resolve": "^6.1.0",
+    "@storybook/addon-actions": "^5.3.19",
     "@storybook/addon-console": "^1.2.1",
-    "@storybook/addon-info": "^5.2.8",
-    "@storybook/addon-knobs": "^5.2.8",
-    "@storybook/addons": "^5.2.8",
-    "@storybook/react": "^5.2.8",
-    "babel-loader": "^8.0.6",
+    "@storybook/addon-info": "^5.3.19",
+    "@storybook/addon-knobs": "^5.3.19",
+    "@storybook/addons": "^5.3.19",
+    "@storybook/react": "^5.3.19",
+    "babel-loader": "^8.1.0",
     "react-demo": "^2.0.0",
-    "rollup": "^1.27.14",
-    "rollup-plugin-babel": "^4.3.3",
-    "rollup-plugin-visualizer": "^3.3.1"
+    "rollup": "^1.32.1",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-visualizer": "^3.3.2"
   },
   "description": "Clean editable bootstrap components for react. Ajax support!",
   "directories": {
