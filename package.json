@@ -13,6 +13,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6969 -c .storybook",
+    "prepublish": "npm run dist && npm run distdocs",
     "dist": "rollup -c",
     "distdocs": "build-storybook -c .storybook -o docs"
   },
