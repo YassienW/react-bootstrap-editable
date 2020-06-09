@@ -57,7 +57,8 @@ export default class Editable extends React.Component{
             </Button>
         );
         if(React.isValidElement(this.props.renderConfirmElement)){
-            confirmButton = this.props.renderConfirmElement;
+            confirmButton = React.cloneElement(this.props.renderConfirmElement,
+                {onClick: this.onFormSubmit});
         }
         if(React.isValidElement(this.props.renderCancelElement)){
             cancelButton = React.cloneElement(this.props.renderCancelElement,
