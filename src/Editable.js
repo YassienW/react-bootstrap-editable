@@ -119,7 +119,7 @@ export default class Editable extends React.Component{
             </Form>
         )
     }
-    onFormSubmit = (e) => {
+    onFormSubmit(e){
         e.preventDefault()
         this.onSubmit(this.state.newValue)
     }
