@@ -8,7 +8,7 @@ export default class TextField extends React.Component {
     render(){
         return (
             <React.Fragment>
-                <Input invalid={!!this.props.validationText}
+                <Input invalid={!!this.props.validationText} autoFocus
                        value={this.props.value? this.props.value : ""}
                        onChange={e => this.props.setNewValue(e.target.value)}
                        type="text" bsSize="sm" className="mr-1"/>
