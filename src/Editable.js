@@ -58,7 +58,7 @@ export default class Editable extends React.Component{
         );
         if(React.isValidElement(this.props.renderConfirmElement)){
             confirmButton = React.cloneElement(this.props.renderConfirmElement,
-                {onClick: this.onFormSubmit});
+                {onClick: (e) => this.onFormSubmit(e)});
         }
         if(React.isValidElement(this.props.renderCancelElement)){
             cancelButton = React.cloneElement(this.props.renderCancelElement,
@@ -96,7 +96,7 @@ export default class Editable extends React.Component{
                 break;
             case "textarea":
                 return (
-                    <Form onSubmit={this.onFormSubmit}>
+                    <Form onSubmit={(e) => this.onFormSubmit(e)}>
                         <TextArea {...commonProps}/>
                         <div className="d-flex align-items-start">
                             <FormText className="mt-0">{this.state.validationText}</FormText>
@@ -111,7 +111,7 @@ export default class Editable extends React.Component{
                 return null
         }
         return(
-            <Form onSubmit={this.onFormSubmit} className={this.props.className}>
+            <Form onSubmit={(e) => this.onFormSubmit(e)} className={this.props.className}>
                 <div className="align-items-baseline d-flex">
                     {component}
                 </div>
@@ -202,7 +202,7 @@ export default class Editable extends React.Component{
             ) : null;
 
             return(
-                <Form onSubmit={this.onFormSubmit} className={this.props.className} inline>
+                <Form onSubmit={(e) => this.onFormSubmit(e)} className={this.props.className} inline>
                     {p && this.props.showText && <p className="my-0" style={{"whiteSpace": "pre-wrap"}}>{p}</p>}
                     {a && <a ref={this.clickableLink} className="ml-1 mt-auto" href="#"
                              onClick={(e) => {e.preventDefault(); this.setState({isEditing: true})}}>{a}</a>}
