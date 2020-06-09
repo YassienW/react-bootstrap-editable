@@ -31,7 +31,7 @@ export default class Editable extends React.Component{
     }
     componentDidMount() {
         if(this.props.ajax && !this.props.validate && !this.props.disabled){
-            console.error(`Editable(${this.props.id}): You provided an ajax prop without a validate prop; 
+            console.error(`Editable(${this.props.id}): You provided an ajax prop without a validate prop;
             ajax function will not be called`)
         }
     }
@@ -96,7 +96,7 @@ export default class Editable extends React.Component{
                 break;
             case "textarea":
                 return (
-                    <Form>
+                    <Form onSubmit={this.onFormSubmit}>
                         <TextArea {...commonProps}/>
                         <div className="d-flex align-items-start">
                             <FormText className="mt-0">{this.state.validationText}</FormText>
@@ -111,13 +111,17 @@ export default class Editable extends React.Component{
                 return null
         }
         return(
-            <Form className={this.props.className}>
+            <Form onSubmit={this.onFormSubmit} className={this.props.className}>
                 <div className="align-items-baseline d-flex">
                     {component}
                 </div>
                 <FormText className="mt-0">{this.state.validationText}</FormText>
             </Form>
         )
+    }
+    onFormSubmit = (e) => {
+        e.preventDefault()
+        this.onSubmit(this.state.newValue)
     }
     onCancel(){
         //reset validation text AND new value, all back to initial
@@ -198,7 +202,7 @@ export default class Editable extends React.Component{
             ) : null;
 
             return(
-                <Form className={this.props.className} inline>
+                <Form onSubmit={this.onFormSubmit} className={this.props.className} inline>
                     {p && this.props.showText && <p className="my-0" style={{"whiteSpace": "pre-wrap"}}>{p}</p>}
                     {a && <a ref={this.clickableLink} className="ml-1 mt-auto" href="#"
                              onClick={(e) => {e.preventDefault(); this.setState({isEditing: true})}}>{a}</a>}
