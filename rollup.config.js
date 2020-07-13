@@ -8,13 +8,15 @@ module.exports = {
     output: {
         name: "Editable",
         file: "dist/editable.js",
-        format: "cjs"
+        format: "cjs",
+        sourcemap: true,
+        sourcemapExcludeSources: true
     },
     plugins: [
         nodeResolve(),
         babel({exclude: "node_modules/**"}),
         terser(),
-        visualizer({filename: "bundleSize.html", open: true})
+        visualizer({filename: "bundleSize.html", sourcemap: true, open: true})
     ],
     external: ["react", "prop-types", "reactstrap"]
 };
