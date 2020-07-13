@@ -22,6 +22,10 @@ You will also need bootstrap4's CSS in your project
 - Remove reactstrap dependency
 - Better documentation?
 
+### 0.7.0:
+- React hooks
+- File size reduced to 8kb
+
 ### 0.6.0:
 - Reduced bundle size to 16kb
 - Custom buttons
