@@ -51,6 +51,7 @@
     "react-demo": "^2.0.0",
     "rollup": "^1.32.1",
     "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-terser": "^6.1.0",
     "rollup-plugin-visualizer": "^3.3.2"
   },
   "description": "Clean editable bootstrap components for react. Ajax support!",

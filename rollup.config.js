@@ -1,6 +1,7 @@
 import nodeResolve from "@rollup/plugin-node-resolve";
 import babel from "rollup-plugin-babel";
 import visualizer from "rollup-plugin-visualizer";
+import {terser} from "rollup-plugin-terser";
 
 module.exports = {
     input: "src/Editable.js",
@@ -12,6 +13,7 @@ module.exports = {
     plugins: [
         nodeResolve(),
         babel({exclude: "node_modules/**"}),
+        terser(),
         visualizer({filename: "bundleSize.html", open: true})
     ],
     external: ["react", "prop-types", "reactstrap"]
