@@ -19,8 +19,7 @@ You will also need bootstrap4's CSS in your project
 
 ## Changelog:
 ### On the horizon:
-- Custom components
-- More ajax configuration
+- Remove reactstrap dependency
 - Better documentation?
 
 ### 0.6.0:
