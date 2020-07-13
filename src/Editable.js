@@ -4,7 +4,7 @@ import TextField from "./components/TextField";
 import TextArea from "./components/TextArea";
 import Select from "./components/Select";
 import Date from "./components/Date";
-import {Button, Form, PopoverHeader, PopoverBody, Popover, Spinner, FormText} from "reactstrap";
+import {PopoverHeader, PopoverBody, Popover} from "reactstrap";
 import File from "./components/File";
 
 const fontAwesomeStyle = {
@@ -37,18 +37,18 @@ export default function Editable(props){
 
     function getEditingComponent(){
         let confirmButton = (
-            <Button className="ml-auto mr-1" color="success" size="sm">
+            <button className="btn btn-success btn-sm ml-auto mr-1">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style={fontAwesomeStyle}>
                     <path color="white" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/>
                 </svg>
-            </Button>
+            </button>
         );
         let cancelButton = (
-            <Button color="danger" size="sm" onClick={onCancel}>
+            <button className="btn danger btn-sm" onClick={onCancel}>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" style={fontAwesomeStyle}>
                     <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/>
                 </svg>
-            </Button>
+            </button>
         );
         if(React.isValidElement(props.renderConfirmElement)){
             confirmButton = React.cloneElement(props.renderConfirmElement,
@@ -67,7 +67,7 @@ export default function Editable(props){
         if(isLoading){
             controls = (
                 <div className="my-auto mx-4">
-                    <Spinner  style={{width: "1.5rem", height: "1.5rem"}}/>
+                    <div className="spinner-border" style={{width: "1.5rem", height: "1.5rem"}}/>
                 </div>)
         }
         let commonProps = {
@@ -90,13 +90,13 @@ export default function Editable(props){
                 break;
             case "textarea":
                 return (
-                    <Form onSubmit={onFormSubmit}>
+                    <form onSubmit={onFormSubmit}>
                         <TextArea {...commonProps}/>
                         <div className="d-flex align-items-start">
-                            <FormText className="mt-0">{validationText}</FormText>
+                            <small className="mt-0 form-text text-muted">{validationText}</small>
                             {controls}
                         </div>
-                    </Form>);
+                    </form>);
             case "file":
                 component = <File {...commonProps} label={props.label}/>;
                 break;
@@ -105,12 +105,12 @@ export default function Editable(props){
                 return null
         }
         return(
-            <Form onSubmit={onFormSubmit} className={props.className}>
+            <form onSubmit={onFormSubmit} className={props.className}>
                 <div className="align-items-baseline d-flex">
                     {component}
                 </div>
-                <FormText className="mt-0">{validationText}</FormText>
-            </Form>
+                <small className="mt-0 form-text text-muted">{validationText}</small>
+            </form>
         )
     }
     function onFormSubmit(e){
@@ -204,12 +204,12 @@ export default function Editable(props){
         ) : null;
 
         return(
-            <Form onSubmit={onFormSubmit} className={props.className} inline>
+            <form className={`form-inline ${props.className}`} onSubmit={onFormSubmit}>
                 {p && props.showText && <p className="my-0" style={{"whiteSpace": "pre-wrap"}}>{p}</p>}
                 {a && <a ref={clickableLink} className="ml-1 mt-auto" href="#"
                          onClick={(e) => {e.preventDefault(); setIsEditing(true)}}>{a}</a>}
                 {popover}
-            </Form>
+            </form>
         )
     }
 }
