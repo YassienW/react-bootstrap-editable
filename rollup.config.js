@@ -18,5 +18,5 @@ module.exports = {
         terser(),
         visualizer({filename: "bundleSize.html", sourcemap: true, open: true})
     ],
-    external: ["react", "prop-types", "reactstrap"]
+    external: ["react", "react-dom", "prop-types", "react-popper"]
 };
