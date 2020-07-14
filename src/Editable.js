@@ -4,7 +4,7 @@ import TextField from "./components/TextField";
 import TextArea from "./components/TextArea";
 import Select from "./components/Select";
 import Date from "./components/Date";
-import {PopoverHeader, PopoverBody, Popover} from "reactstrap";
+import Popover from "./Popover";
 import File from "./components/File";
 
 const fontAwesomeStyle = {
@@ -44,7 +44,7 @@ export default function Editable(props){
             </button>
         );
         let cancelButton = (
-            <button className="btn danger btn-sm" onClick={onCancel}>
+            <button className="btn btn-danger btn-sm" onClick={onCancel}>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" style={fontAwesomeStyle}>
                     <path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/>
                 </svg>
@@ -197,9 +197,9 @@ export default function Editable(props){
         //add label if applicable
         p = props.label? `${props.label}: ${p}` : p;
         let popover = props.mode === "popover"?(
-            <Popover isOpen={isEditing} placement={props.placement} target={clickableLink}>
-                <PopoverHeader>{props.label}</PopoverHeader>
-                <PopoverBody>{getEditingComponent()}</PopoverBody>
+            <Popover isOpen={isEditing} placement={props.placement} triggerElement={clickableLink}>
+                {props.label}
+                {getEditingComponent()}
             </Popover>
         ) : null;
 
