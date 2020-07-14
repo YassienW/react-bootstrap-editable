@@ -1,5 +1,5 @@
 # React Bootstrap Editable
- 
+
 Clean editable bootstrap components for react. Ajax support!
 Check the [documentation](https://yassienw.github.io/react-bootstrap-editable)
 
@@ -18,9 +18,9 @@ npm i react-bootstrap-editable
 You will also need bootstrap4's CSS in your project
 
 ## Changelog:
-### On the horizon:
-- Remove reactstrap dependency
-- Better documentation?
+
+### 0.8.0:
+- Removed reactstrap dependency
 
 ### 0.7.0:
 - React hooks
@@ -46,7 +46,7 @@ You will also need bootstrap4's CSS in your project
 - Popover mode added
 - Added Text Area editable
 - Removed col size props, the editable now automatically takes full width of parent container
-- Editable now uses flexbox to perfectly fit the items in whatever space is available 
+- Editable now uses flexbox to perfectly fit the items in whatever space is available
 ### 0.3.0:
 - Switched components to use form rows instead of inline forms
 - Added props to control col width for the input and controls

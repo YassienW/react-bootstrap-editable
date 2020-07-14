@@ -1,5 +1,5 @@
 import React from "react"
-import {Input} from "reactstrap";
+import Input from "../Input"
 
 export default function TextField({value, setNewValue, controls, options}){
     const selectOptions = options.map((value, index) => {
@@ -7,8 +7,7 @@ export default function TextField({value, setNewValue, controls, options}){
     })
     return (
         <React.Fragment>
-            <Input value={value} onChange={e => setNewValue(e.target.value)}
-                   type="select" bsSize="sm" className="mr-1">
+            <Input value={value} onChange={setNewValue} type="select" className="mr-1">
                 {selectOptions}
             </Input>
             {controls}
