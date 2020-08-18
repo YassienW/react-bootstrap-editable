@@ -204,7 +204,7 @@ export default function Editable(props){
         ) : null;
 
         return(
-            <form className={`form-inline ${props.className}`} onSubmit={onFormSubmit}>
+            <form className={`form-inline ${props.className}`}>
                 {p && props.showText && <p className="my-0" style={{"whiteSpace": "pre-wrap"}}>{p}</p>}
                 {a && <a ref={clickableLink} className="ml-1 mt-auto" href="#"
                          onClick={(e) => {e.preventDefault(); setIsEditing(true)}}>{a}</a>}
